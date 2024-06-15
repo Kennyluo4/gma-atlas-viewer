@@ -1,10 +1,13 @@
 import streamlit as st
 import scanpy as sc
 import matplotlib.pyplot as plt
-import boto3
+import boto3        # for s3 file transfer
+import paramiko     # for sftp file transfer
+from io import StringIO
 
 @st.cache_data
-def get_adata(file_name):
+def get_adata_aws(file_name):
+    '''read files stored on AWS S3'''
     # Read AWS credentials from environment variables
     aws_access_key_id = st.secrets['AWS_ACCESS_KEY_ID']
     aws_secret_access_key = st.secrets['AWS_SECRET_ACCESS_KEY']
@@ -24,6 +27,29 @@ def get_adata(file_name):
     adata = sc.read(local_file_name)
     return adata
 
+def get_adata_sftp(file_name):
+    '''read files stored on cluster'''
+    hostname = '128.192.158.32'
+    # st.secrets['xferhost']
+    port = '22'
+    username = 'schmitzlab'
+    # st.secrets['userid']
+    password = 'Schmacct5$'
+    # st.secrets['xferpass']
+    remote_path = '/data01/epigenome/PlantEpigenome/share/soybean_atlas/' + file_name
+    try:
+        transport = paramiko.Transport((hostname, port))
+        transport.connect(username=username, password=password)
+
+        sftp = paramiko.SFTPClient.from_transport(transport)
+        with sftp.file(remote_path, 'r') as remote_file:
+            file_content = remote_file.read().decode('utf-8')
+        sftp.close()
+        transport.close()
+        return file_content
+    except Exception as e:
+        st.error(f"An error occurred: {e}")
+        return None
 
 def main():
     ## dic for matching input sample same and stored adata file name
@@ -49,7 +75,8 @@ def main():
     ## Retrive the adata after data type selection
     if sample_name!= None and sample_name!= '---Please choose---':
         filename = sample_dic[sample_name]
-        adata = get_adata(filename)
+        # adata = get_adata_aws(filename)
+        adata = get_adata_sftp(filename)
         # adata = sc.read_h5ad('/Users/ziliangluo/Library/CloudStorage/OneDrive-UniversityofGeorgia/PycharmProjects/SpatialSeq/saved_ad/gma_sp_CS2A_fromSeurat.h5ad')
         
         # read the genes

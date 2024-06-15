@@ -4,3 +4,5 @@ altair>=4.0
 scanpy>=1.9.8
 matplotlib
 boto3
+paramiko
+io
