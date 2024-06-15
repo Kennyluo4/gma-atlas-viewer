@@ -48,8 +48,11 @@ def main():
     
     ## Retrive the adata after selection
     ##get the adata from s3
-    filename = sample_dic[sample_name]
-    print(filename)
+    try:
+        filename = sample_dic[sample_name]
+    except KeyError:
+        st.write('Please select the data')
+    # print(filename)
     adata = get_adata(filename)
     # adata = sc.read_h5ad('/Users/ziliangluo/Library/CloudStorage/OneDrive-UniversityofGeorgia/PycharmProjects/SpatialSeq/saved_ad/gma_sp_CS2A_fromSeurat.h5ad')
      
