@@ -86,6 +86,7 @@ def main():
         # st.markdown('Selected gene `%s`' % gene_name)
         if plot_type == 'Violin':
             st.markdown('**Violin Plot**')
+            st.markdown('Please select a gene.')
             if gene_name != '':
                 fig, ax = plt.subplots(figsize=(12, 6))
                 sc.pl.violin(adata,gene_name, groupby='cell_types', rotation= 60, ax=ax)
