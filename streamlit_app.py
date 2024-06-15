@@ -46,17 +46,18 @@ def main():
     else:
         sample_name = None
     
-    ## Retrive the adata after selection
-    ##get the adata from s3
-    if sample_name and sample_name!= None:
+    ## Retrive the adata after data type selection
+    if sample_name!= None and sample_name!= '---Please choose---':
         filename = sample_dic[sample_name]
+        adata = get_adata(filename)
+        # adata = sc.read_h5ad('/Users/ziliangluo/Library/CloudStorage/OneDrive-UniversityofGeorgia/PycharmProjects/SpatialSeq/saved_ad/gma_sp_CS2A_fromSeurat.h5ad')
+        
+        # read the genes
+        gene_ids = adata.var.index.tolist()
     else:
         st.write('Please select a data to start.')
     # print(filename)
-    adata = get_adata(filename)
-    # adata = sc.read_h5ad('/Users/ziliangluo/Library/CloudStorage/OneDrive-UniversityofGeorgia/PycharmProjects/SpatialSeq/saved_ad/gma_sp_CS2A_fromSeurat.h5ad')
-     
-    gene_ids = adata.var.index.tolist()
+
     # gene_ids = ['test','ann1.Glyma.02G228100', 'ann1.Glyma.15G127900']
     
     if sample_name and sample_name != '---Please choose---':
