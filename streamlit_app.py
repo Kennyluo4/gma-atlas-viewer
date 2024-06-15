@@ -3,11 +3,6 @@ import scanpy as sc
 import matplotlib.pyplot as plt
 import boto3
 
-## dic for matching input sample same and stored adata file name
-sample_dic = {'heart stage seed (spatial)': 'gma_sp_HSA_fromSeurat.h5ad','cotyledon stage seed (spatial)':'gma_sp_CS2A_fromSeurat.h5ad', 'early maturation stage seed (spatial)':'gma_sp_ESA_fromSeurat.h5ad',
-              'heart stage seed (snRNA)': 'gma_sp_CS2A_fromSeurat.h5ad', 'cotyledon stage seed (snRNA)':'sc_adt_CS.h5ad'
-}
-
 @st.cache_data
 def get_adata(file_name):
     # Read AWS credentials from environment variables
@@ -31,9 +26,9 @@ def get_adata(file_name):
 
 
 def main():
-    ## prepare the data
-    # gene_ids = adata.var.index.tolist()
-    gene_ids = ['test','ann1.Glyma.02G228100', 'ann1.Glyma.15G127900']
+    ## dic for matching input sample same and stored adata file name
+    sample_dic = {'heart stage seed (spatial)': 'gma_sp_HSA_fromSeurat.h5ad','cotyledon stage seed (spatial)':'gma_sp_CS2A_fromSeurat.h5ad', 'early maturation stage seed (spatial)':'gma_sp_ESA_fromSeurat.h5ad',
+                'heart stage seed (snRNA)': 'gma_sp_CS2A_fromSeurat.h5ad', 'cotyledon stage seed (snRNA)':'sc_adt_CS.h5ad'}
     
     ###############################################
     ##                 Sidebar                  ###
@@ -50,6 +45,16 @@ def main():
         sample_name = st.sidebar.selectbox('Tissue', ['---Please choose---', 'heart stage seed (spatial)', 'cotyledon stage seed (spatial)', 'early maturation stage seed (spatial)'])
     else:
         sample_name = None
+    
+    ## Retrive the adata after selection
+    ##get the adata from s3
+    filename = sample_dic[sample_name]
+    print(filename)
+    adata = get_adata(filename)
+    # adata = sc.read_h5ad('/Users/ziliangluo/Library/CloudStorage/OneDrive-UniversityofGeorgia/PycharmProjects/SpatialSeq/saved_ad/gma_sp_CS2A_fromSeurat.h5ad')
+     
+    gene_ids = adata.var.index.tolist()
+    # gene_ids = ['test','ann1.Glyma.02G228100', 'ann1.Glyma.15G127900']
     
     if sample_name and sample_name != '---Please choose---':
         st.sidebar.markdown('## Please select gene to plot:')
@@ -72,12 +77,8 @@ def main():
         variables_to_plot = ['cell_types']        ## cell typs not for Violin plot
         if gene_name:
             variables_to_plot.append(gene_name)
-            
-        ##get the adata from s3
-        filename = sample_dic(sample_name)
-        adata = get_adata(filename)
         
-        # adata = sc.read_h5ad('/Users/ziliangluo/Library/CloudStorage/OneDrive-UniversityofGeorgia/PycharmProjects/SpatialSeq/saved_ad/gma_sp_CS2A_fromSeurat.h5ad')
+       
         # st.markdown('Selected gene `%s`' % gene_name)
         if plot_type == 'Violin':
             st.markdown('**Violin Plot**')
