@@ -2,8 +2,8 @@ import streamlit as st
 import scanpy as sc
 import matplotlib.pyplot as plt
 import boto3        # for s3 file transfer
-import paramiko     # for sftp file transfer
-from io import StringIO
+# import paramiko     # for sftp file transfer
+# from io import StringIO
 import os
 
 @st.cache_data
