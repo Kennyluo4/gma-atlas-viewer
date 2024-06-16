@@ -80,9 +80,9 @@ def main():
     ## Retrive the adata after data type selection
     if sample_name!= None and sample_name!= '---Please choose---':
         filename = sample_dic[sample_name]
-        # adata = get_adata_aws(filename)
+        adata = get_adata_aws(filename)
         # adata = get_adata_sftp(filename)
-        adata = sc.read_h5ad('/Users/ziliangluo/Library/CloudStorage/OneDrive-UniversityofGeorgia/PycharmProjects/SpatialSeq/saved_ad/gma_sp_CS2A_fromSeurat.h5ad')
+        # adata = sc.read_h5ad('/Users/ziliangluo/Library/CloudStorage/OneDrive-UniversityofGeorgia/PycharmProjects/SpatialSeq/saved_ad/gma_sp_CS2A_fromSeurat.h5ad')
         
         # read the genes
         gene_ids = adata.var.index.tolist()
