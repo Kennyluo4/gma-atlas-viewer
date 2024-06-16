@@ -12,8 +12,8 @@ def get_adata_aws(file_name):
     # Read AWS credentials from environment variables
     # aws_access_key_id = st.secrets['AWS_ACCESS_KEY_ID']           # st.secrets works only for streamlit cloud hosted app
     # aws_secret_access_key = st.secrets['AWS_SECRET_ACCESS_KEY']
-    aws_access_key_id = os.environ.get('AWS_ACCESS_KEY_ID')
-    aws_secret_access_key = os.environ.get('AWS_SECRET_ACCESS_KEY')
+    aws_access_key_id = os.getenv('AWS_ACCESS_KEY_ID')
+    aws_secret_access_key = os.getenv('AWS_SECRET_ACCESS_KEY')
 
     # Initialize S3 client
     s3 = boto3.client('s3', aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
