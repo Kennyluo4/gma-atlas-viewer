@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import boto3        # for s3 file transfer
 import paramiko     # for sftp file transfer
 from io import StringIO
+import os
 
 @st.cache_data
 def get_adata_aws(file_name):
@@ -29,21 +30,25 @@ def get_adata_aws(file_name):
 
 def get_adata_sftp(file_name):
     '''read files stored on cluster'''
-    hostname = '128.192.158.32'
+    hostname = 'xfer.gacrc.uga.edu'
     # st.secrets['xferhost']
-    port = '22'
-    username = 'schmitzlab'
+    port = 22
+    username = ''
     # st.secrets['userid']
-    password = 'Schmacct5$'
+    password = ''
     # st.secrets['xferpass']
-    remote_path = '/data01/epigenome/PlantEpigenome/share/soybean_atlas/' + file_name
+    remote_path = '/' + file_name
+    with open(os.path.expanduser('~/.ssh/id_rsa'), 'r') as file:
+        key_content = file.read()
     try:
+        private_key = paramiko.RSAKey.from_private_key(StringIO(key_content), password='')
+
         transport = paramiko.Transport((hostname, port))
-        transport.connect(username=username, password=password)
+        transport.connect(username=username, pkey=private_key)
 
         sftp = paramiko.SFTPClient.from_transport(transport)
         with sftp.file(remote_path, 'r') as remote_file:
-            file_content = remote_file.read().decode('utf-8')
+            file_content = remote_file.read()
         sftp.close()
         transport.close()
         return file_content
@@ -75,14 +80,14 @@ def main():
     ## Retrive the adata after data type selection
     if sample_name!= None and sample_name!= '---Please choose---':
         filename = sample_dic[sample_name]
-        # adata = get_adata_aws(filename)
-        adata = get_adata_sftp(filename)
+        adata = get_adata_aws(filename)
+        # adata = get_adata_sftp(filename)
         # adata = sc.read_h5ad('/Users/ziliangluo/Library/CloudStorage/OneDrive-UniversityofGeorgia/PycharmProjects/SpatialSeq/saved_ad/gma_sp_CS2A_fromSeurat.h5ad')
         
         # read the genes
         gene_ids = adata.var.index.tolist()
     else:
-        st.write('Please select a data to start.')
+        st.sidebar.write('Please select a data to explore the genes')
     # print(filename)
 
     # gene_ids = ['test','ann1.Glyma.02G228100', 'ann1.Glyma.15G127900']
