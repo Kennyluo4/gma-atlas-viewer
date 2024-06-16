@@ -118,37 +118,33 @@ def main():
         
        
         # st.markdown('Selected gene `%s`' % gene_name)
-        if plot_type == 'Violin':
-            st.markdown('**Violin Plot**')
-            st.markdown('Please select a gene.')
-            if gene_name != '':
-                fig, ax = plt.subplots(figsize=(12, 6))
-                sc.pl.violin(adata,gene_name, groupby='cell_types', rotation= 60, ax=ax1)
-                st.pyplot(fig)
+
             
-        elif plot_type == 'UMAP':
-            st.markdown('**UMAP Plot**')
-            fig, axs = plt.subplots(len(variables_to_plot), 1 , figsize=(5.5, 4.5* len(variables_to_plot)))
+        if plot_type == 'UMAP':
+            st.subheader('UMAP Plot')
+            fig, axs = plt.subplots(1, len(variables_to_plot), figsize=(6 * len(variables_to_plot), 5))
             if len(variables_to_plot) == 1:
                 axs = [axs]
             for ax, gene in zip(axs, variables_to_plot):
                 sc.pl.umap(adata, color=gene, ax=ax, show=False)
-            plt.subplots_adjust(wspace=0.5)
+                plt.subplots_adjust(wspace=1)
             st.pyplot(fig)
-                        
         elif plot_type == 'Spatial':
-            st.markdown('**Spatial Plot**')
-            if lib_type != 'spRNA-seq':
-                st.markdown(':exclamation: `Selected data is not spatial transcriptome. Please select other plot types`')
-            else:
-                fig, axs = plt.subplots(len(variables_to_plot), 1 , figsize=(5.5, 4.5* len(variables_to_plot)))
-                if len(variables_to_plot) == 1:
-                    axs = [axs]
-                for ax, gene in zip(axs, variables_to_plot):
-                    sc.pl.spatial(adata, color=gene, ax=ax, show=False)
-                plt.subplots_adjust(wspace=0.5)
+            st.subheader('Spatial Plot')
+            fig, axs = plt.subplots(1, len(variables_to_plot), figsize=(6 * len(variables_to_plot), 5))
+            if len(variables_to_plot) == 1:
+                axs = [axs]
+            for ax, gene in zip(axs, variables_to_plot):
+                sc.pl.spatial(adata, color=gene, ax=ax, show=False, wspace=0.6)
+                plt.subplots_adjust(wspace=1)
+            st.pyplot(fig)
+        elif plot_type == 'Violin':
+            st.markdown('**Violin Plot**')
+            st.markdown('Please select a gene.')
+            if gene_name != '':
+                fig, ax = plt.subplots(figsize=(12, 6))
+                sc.pl.violin(adata,gene_name, groupby='cell_types', rotation= 60, ax=ax)
                 st.pyplot(fig)
-                    
 
 if __name__ == '__main__':
     main()
