@@ -80,9 +80,9 @@ def main():
     ## Retrive the adata after data type selection
     if sample_name!= None and sample_name!= '---Please choose---':
         filename = sample_dic[sample_name]
-        adata = get_adata_aws(filename)
+        # adata = get_adata_aws(filename)
         # adata = get_adata_sftp(filename)
-        # adata = sc.read_h5ad('/Users/ziliangluo/Library/CloudStorage/OneDrive-UniversityofGeorgia/PycharmProjects/SpatialSeq/saved_ad/gma_sp_CS2A_fromSeurat.h5ad')
+        adata = sc.read_h5ad('/Users/ziliangluo/Library/CloudStorage/OneDrive-UniversityofGeorgia/PycharmProjects/SpatialSeq/saved_ad/gma_sp_CS2A_fromSeurat.h5ad')
         
         # read the genes
         gene_ids = adata.var.index.tolist()
@@ -128,7 +128,7 @@ def main():
             st.markdown('**UMAP Plot**')
             fig2, axs2 = plt.subplots(len(variables_to_plot), 1 , figsize=(5.5, 4.5* len(variables_to_plot)))
             if len(variables_to_plot) == 1:
-                axs = [axs2]
+                axs2 = [axs2]
             for ax, gene in zip(axs2, variables_to_plot):
                 sc.pl.umap(adata, color=gene, ax=ax, show=False)
             plt.subplots_adjust(wspace=0.5)
@@ -141,7 +141,7 @@ def main():
             else:
                 fig3, axs3 = plt.subplots(len(variables_to_plot), 1 , figsize=(5.5, 4.5* len(variables_to_plot)))
                 if len(variables_to_plot) == 1:
-                    axs = [axs3]
+                    axs3 = [axs3]
                 for ax, gene in zip(axs3, variables_to_plot):
                     sc.pl.spatial(adata, color=gene, ax=ax, show=False)
                 plt.subplots_adjust(wspace=0.5)
