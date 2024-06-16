@@ -120,32 +120,32 @@ def main():
             st.markdown('**Violin Plot**')
             st.markdown('Please select a gene.')
             if gene_name != '':
-                fig, ax = plt.subplots(figsize=(12, 6))
-                sc.pl.violin(adata,gene_name, groupby='cell_types', rotation= 60, ax=ax)
-                st.pyplot(fig)
+                fig1, ax1 = plt.subplots(figsize=(12, 6))
+                sc.pl.violin(adata,gene_name, groupby='cell_types', rotation= 60, ax=ax1)
+                st.pyplot(fig1)
             
         elif plot_type == 'UMAP':
             st.markdown('**UMAP Plot**')
-            fig, axs = plt.subplots(len(variables_to_plot), 1 , figsize=(5.5, 4.5* len(variables_to_plot)))
+            fig2, axs2 = plt.subplots(len(variables_to_plot), 1 , figsize=(5.5, 4.5* len(variables_to_plot)))
             if len(variables_to_plot) == 1:
-                axs = [axs]
-            for ax, gene in zip(axs, variables_to_plot):
+                axs = [axs2]
+            for ax, gene in zip(axs2, variables_to_plot):
                 sc.pl.umap(adata, color=gene, ax=ax, show=False)
-            # plt.subplots_adjust(wspace=0.5)
-            st.pyplot(fig)
+            plt.subplots_adjust(wspace=0.5)
+            st.pyplot(fig2)
                         
         elif plot_type == 'Spatial':
             st.markdown('**Spatial Plot**')
             if lib_type != 'spRNA-seq':
                 st.markdown(':exclamation: `Selected data is not spatial transcriptome. Please select other plot types`')
             else:
-                fig, axs = plt.subplots(len(variables_to_plot), 1 , figsize=(5.5, 4.5* len(variables_to_plot)))
+                fig3, axs3 = plt.subplots(len(variables_to_plot), 1 , figsize=(5.5, 4.5* len(variables_to_plot)))
                 if len(variables_to_plot) == 1:
-                    axs = [axs]
-                for ax, gene in zip(axs, variables_to_plot):
+                    axs = [axs3]
+                for ax, gene in zip(axs3, variables_to_plot):
                     sc.pl.spatial(adata, color=gene, ax=ax, show=False)
-                # plt.subplots_adjust(wspace=0.5)
-                st.pyplot(fig)
+                plt.subplots_adjust(wspace=0.5)
+                st.pyplot(fig3)
                     
 
 if __name__ == '__main__':
