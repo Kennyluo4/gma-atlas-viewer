@@ -108,6 +108,7 @@ def main():
     if sample_name!= None and sample_name!= '---Please choose---':
         filename = sample_dic[sample_name]
         adata = get_adata_aws(filename)
+        # st.write('Loaded file:',adata)
         # adata = get_adata_sftp(filename)
         # adata = sc.read_h5ad('/Users/ziliangluo/Library/CloudStorage/OneDrive-UniversityofGeorgia/PycharmProjects/SpatialSeq/saved_ad/gma_sp_HSA_fromSeurat.h5ad')
         
