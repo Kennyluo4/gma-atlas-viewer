@@ -84,8 +84,9 @@ def main():
     sample_dic = {'heart stage seed (spatial)': 'gma_sp_HSA_fromSeurat.h5ad',
                   'cotyledon stage seed (spatial)':'gma_sp_CS2A_fromSeurat.h5ad', 
                   'early maturation stage seed (spatial)':'gma_sp_ESA_fromSeurat.h5ad',
-                    'heart stage seed (snRNA)': 'gma_sp_CS2A_fromSeurat.h5ad', 
-                    'cotyledon stage seed (snRNA)':'sc_adt_CS.h5ad'}
+                  'hypocotyl (spatial)': 'gma_sp_HPA_fromSeurat.h5ad',
+                  'heart stage seed (snRNA)': 'gma_sp_CS2A_fromSeurat.h5ad', 
+                  'cotyledon stage seed (snRNA)':'sc_adt_CS.h5ad'}
     
     ###############################################
     ##                 Sidebar                  ###
