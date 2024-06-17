@@ -6,6 +6,27 @@ import boto3        # for s3 file transfer
 # from io import StringIO
 import os
 
+# Set the page config to wide mode
+st.set_page_config(layout="centered")
+    
+# Inject custom CSS to set specific width or ratio
+st.markdown(
+    """
+    <style>
+    /* Define the main content width */
+    .main {
+        max-width: 80%; /* Adjust the percentage as needed */
+        margin: 1 auto; /* Center align */
+    }
+    /* Optional: Define sidebar width */
+    .sidebar .sidebar-content {
+        width: 20%; /* Adjust the percentage as needed */
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 @st.cache_data
 def get_adata_aws(file_name):
     '''read files stored on AWS S3'''
@@ -60,8 +81,11 @@ def get_adata_sftp(file_name):
 
 def main():
     ## dic for matching input sample same and stored adata file name
-    sample_dic = {'heart stage seed (spatial)': 'gma_sp_HSA_fromSeurat.h5ad','cotyledon stage seed (spatial)':'gma_sp_CS2A_fromSeurat.h5ad', 'early maturation stage seed (spatial)':'gma_sp_ESA_fromSeurat.h5ad',
-                'heart stage seed (snRNA)': 'gma_sp_CS2A_fromSeurat.h5ad', 'cotyledon stage seed (snRNA)':'sc_adt_CS.h5ad'}
+    sample_dic = {'heart stage seed (spatial)': 'gma_sp_HSA_fromSeurat.h5ad',
+                  'cotyledon stage seed (spatial)':'gma_sp_CS2A_fromSeurat.h5ad', 
+                  'early maturation stage seed (spatial)':'gma_sp_ESA_fromSeurat.h5ad',
+                    'heart stage seed (snRNA)': 'gma_sp_CS2A_fromSeurat.h5ad', 
+                    'cotyledon stage seed (snRNA)':'sc_adt_CS.h5ad'}
     
     ###############################################
     ##                 Sidebar                  ###
@@ -84,7 +108,7 @@ def main():
         filename = sample_dic[sample_name]
         adata = get_adata_aws(filename)
         # adata = get_adata_sftp(filename)
-        # adata = sc.read_h5ad('/Users/ziliangluo/Library/CloudStorage/OneDrive-UniversityofGeorgia/PycharmProjects/SpatialSeq/saved_ad/gma_sp_CS2A_fromSeurat.h5ad')
+        # adata = sc.read_h5ad('/Users/ziliangluo/Library/CloudStorage/OneDrive-UniversityofGeorgia/PycharmProjects/SpatialSeq/saved_ad/gma_sp_HSA_fromSeurat.h5ad')
         
         # read the genes
         gene_ids = adata.var.index.tolist()
@@ -104,6 +128,7 @@ def main():
     ###############################################
     ##                Main page                 ###
     ###############################################
+    
     st.markdown('## Soybean Gene Visualization')
     st.markdown('Welcome to the soybean multiomic single-cell database. Please select the dataset and genes from the sidebar to start. :balloon:')
     st.markdown('[A spatially resolved multiomic single-cell atlas of soybean development (paper link)](https://schmitzlab.uga.edu/), Zhang et al., 2024 BioRxiv')
@@ -115,32 +140,32 @@ def main():
         variables_to_plot = ['cell_types']        ## cell typs not for Violin plot
         if gene_name:
             variables_to_plot.append(gene_name)
-        
-       
         # st.markdown('Selected gene `%s`' % gene_name)
-
-            
+        
         if plot_type == 'UMAP':
             st.subheader('UMAP Plot')
-            fig, axs = plt.subplots(1, len(variables_to_plot), figsize=(6 * len(variables_to_plot), 5))
+            fig, axs = plt.subplots(1, len(variables_to_plot), figsize=(5 * len(variables_to_plot), 4))
             if len(variables_to_plot) == 1:
                 axs = [axs]
             for ax, gene in zip(axs, variables_to_plot):
                 sc.pl.umap(adata, color=gene, ax=ax, show=False)
-                plt.subplots_adjust(wspace=1)
+                plt.subplots_adjust(wspace=1.2)
             st.pyplot(fig)
         elif plot_type == 'Spatial':
             st.subheader('Spatial Plot')
-            fig, axs = plt.subplots(1, len(variables_to_plot), figsize=(6 * len(variables_to_plot), 5))
-            if len(variables_to_plot) == 1:
-                axs = [axs]
-            for ax, gene in zip(axs, variables_to_plot):
-                sc.pl.spatial(adata, color=gene, ax=ax, show=False, wspace=0.6)
-                plt.subplots_adjust(wspace=1)
-            st.pyplot(fig)
+            if lib_type != 'spRNA-seq':
+                st.markdown(':crying_cat_face: Selected data is not spatial transcriptomics:crying_cat_face:')
+            else:
+                fig, axs = plt.subplots(1, len(variables_to_plot), figsize=(5 * len(variables_to_plot), 4))
+                if len(variables_to_plot) == 1:
+                    axs = [axs]
+                for ax, gene in zip(axs, variables_to_plot):
+                    sc.pl.spatial(adata, color=gene, ax=ax, show=False)
+                    plt.subplots_adjust(wspace=1.2)
+                st.pyplot(fig)
         elif plot_type == 'Violin':
             st.markdown('**Violin Plot**')
-            st.markdown('Please select a gene.')
+            st.markdown(':point_left: Please select a gene from the sidebar')
             if gene_name != '':
                 fig, ax = plt.subplots(figsize=(12, 6))
                 sc.pl.violin(adata,gene_name, groupby='cell_types', rotation= 60, ax=ax)
