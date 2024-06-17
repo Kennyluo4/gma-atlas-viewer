@@ -108,7 +108,6 @@ def main():
     if sample_name!= None and sample_name!= '---Please choose---':
         filename = sample_dic[sample_name]
         adata = get_adata_aws(filename)
-        # st.write('Loaded file:',adata)
         # adata = get_adata_sftp(filename)
         # adata = sc.read_h5ad('/Users/ziliangluo/Library/CloudStorage/OneDrive-UniversityofGeorgia/PycharmProjects/SpatialSeq/saved_ad/gma_sp_HSA_fromSeurat.h5ad')
         
@@ -155,16 +154,16 @@ def main():
             st.pyplot(fig)
         elif plot_type == 'Spatial':
             st.subheader('Spatial Plot')
-            # if lib_type != 'spRNA-seq':
-            #     st.markdown(':crying_cat_face: Selected data is not spatial transcriptomics:crying_cat_face:')
-            # else:
-            fig, axs = plt.subplots(1, len(variables_to_plot), figsize=(5 * len(variables_to_plot), 4))
-            if len(variables_to_plot) == 1:
-                axs = [axs]
-            for ax, gene in zip(axs, variables_to_plot):
-                sc.pl.spatial(adata, color=gene, ax=ax, show=False)
-                plt.subplots_adjust(wspace=1.2)
-            st.pyplot(fig)
+            if lib_type != 'spRNA-seq':
+                st.markdown(':crying_cat_face: Selected data is not spatial transcriptomics:crying_cat_face:')
+            else:
+                fig, axs = plt.subplots(1, len(variables_to_plot), figsize=(5 * len(variables_to_plot), 4))
+                if len(variables_to_plot) == 1:
+                    axs = [axs]
+                for ax, gene in zip(axs, variables_to_plot):
+                    sc.pl.spatial(adata, color=gene, ax=ax, show=False)
+                    plt.subplots_adjust(wspace=1.2)
+                st.pyplot(fig)
         elif plot_type == 'Violin':
             st.markdown('**Violin Plot**')
             st.markdown(':point_left: Please select a gene from the sidebar')
