@@ -42,7 +42,7 @@ def get_adata_aws(file_name):
     bucket_name = 'soybeanatlas'
     file_key = file_name
     local_file_name = file_name
-    # print(f'Reading file: {local_file_name}')
+    print(f'Reading file: {local_file_name}')
 
     # Download file from S3
     s3.download_file(bucket_name, file_key, local_file_name)
@@ -109,7 +109,7 @@ def main():
         filename = sample_dic[sample_name]
         adata = get_adata_aws(filename)
         # adata = get_adata_sftp(filename)
-        # adata = sc.read_h5ad('/Users/ziliangluo/Library/CloudStorage/OneDrive-UniversityofGeorgia/PycharmProjects/SpatialSeq/saved_ad/gma_sp_HSA_fromSeurat.h5ad')
+        # adata = sc.read_h5ad('/Users/ziliangluo/Library/CloudStorage/OneDrive-UniversityofGeorgia/PycharmProjects/SpatialSeq/saved_ad/Gm_atlas_Cotyledon_stage_seeds_ATAC_imputed2.h5ad')
         
         # read the genes
         gene_ids = adata.var.index.tolist()
@@ -155,7 +155,7 @@ def main():
         elif plot_type == 'Spatial':
             st.subheader('Spatial Plot')
             if lib_type != 'spRNA-seq':
-                st.markdown(':crying_cat_face: Selected data is not spatial transcriptomics:crying_cat_face:')
+                st.markdown(' :crying_cat_face: Spatial Map not available. Selected data is not spatial transcriptomics')
             else:
                 fig, axs = plt.subplots(1, len(variables_to_plot), figsize=(5 * len(variables_to_plot), 4))
                 if len(variables_to_plot) == 1:
