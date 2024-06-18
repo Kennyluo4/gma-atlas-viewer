@@ -155,7 +155,7 @@ def main():
         elif plot_type == 'Spatial':
             st.subheader('Spatial Plot')
             if lib_type != 'spRNA-seq':
-                st.error(' :crying_cat_face: Spatial Map not available. Selected data is not spatial transcriptomics')
+                st.error(' :crying_cat_face: Spatial Map not available. \nSelected data is not spatial transcriptomics')
             else:
                 fig, axs = plt.subplots(1, len(variables_to_plot), figsize=(5 * len(variables_to_plot), 4))
                 if len(variables_to_plot) == 1:
