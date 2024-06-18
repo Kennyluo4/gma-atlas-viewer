@@ -155,7 +155,7 @@ def main():
         elif plot_type == 'Spatial':
             st.subheader('Spatial Plot')
             if lib_type != 'spRNA-seq':
-                st.markdown(' :crying_cat_face: Spatial Map not available. Selected data is not spatial transcriptomics')
+                st.error(' :crying_cat_face: Spatial Map not available. Selected data is not spatial transcriptomics')
             else:
                 fig, axs = plt.subplots(1, len(variables_to_plot), figsize=(5 * len(variables_to_plot), 4))
                 if len(variables_to_plot) == 1:
@@ -166,7 +166,7 @@ def main():
                 st.pyplot(fig)
         elif plot_type == 'Violin':
             st.markdown('**Violin Plot**')
-            st.markdown(':point_left: Please select a gene from the sidebar')
+            st.error(':point_left: Please select a gene in the sidebar')
             if gene_name != '':
                 fig, ax = plt.subplots(figsize=(12, 6))
                 sc.pl.violin(adata,gene_name, groupby='cell_types', rotation= 60, ax=ax)
