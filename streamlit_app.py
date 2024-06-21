@@ -81,12 +81,13 @@ def get_adata_sftp(file_name):
 
 def main():
     ## dic for matching input sample same and stored adata file name
-    sample_dic = {'heart stage seed (spatial)': 'gma_sp_HSA_fromSeurat.h5ad',
-                  'cotyledon stage seed (spatial)':'gma_sp_CS2A_fromSeurat.h5ad', 
-                  'early maturation stage seed (spatial)':'gma_sp_ESA_fromSeurat.h5ad',
-                  'hypocotyl (spatial)': 'gma_sp_HPA_fromSeurat.h5ad',
-                  'heart stage seed (snRNA)': 'gma_sp_CS2A_fromSeurat.h5ad', 
-                  'cotyledon stage seed (snRNA)':'sc_adt_CS.h5ad'}
+    sample_dic = {'heart stage seed (spatial)': 'gma_sp_HSA_fromSeurat.h5ad','cotyledon stage seed (spatial)':'gma_sp_CS2A_fromSeurat.h5ad', 
+                  'early maturation stage seed (spatial)':'gma_sp_ESA_fromSeurat.h5ad','hypocotyl (spatial)': 'gma_sp_HPA_fromSeurat.h5ad','root (spatial)': 'gma_sp_RTC_rep1_fromSeurat.h5ad',
+                  
+                  'globular stage seed (snRNA)': 'snrna_adt_GS_slim.h5ad','heart stage seed (snRNA)': 'snrna_adt_HS_slim.h5ad',
+                  'cotyledon stage seed (snRNA)': 'snrna_adt_CS_slim.h5ad', 'early maturation stage seed (snRNA)': 'snrna_adt_ES_slim.h5ad',
+                  'hypocotyl (snRNA)':'snrna_adt_HP_slim.h5ad', 'root (snRNA)':'snrna_adt_RT_slim.h5ad', 'nodule (snRNA)':'snrna_adt_NOD_slim.h5ad'
+                  }
     
     ###############################################
     ##                 Sidebar                  ###
@@ -98,9 +99,11 @@ def main():
     lib_type = st.sidebar.selectbox('Library type', [ '---Please choose---','snRNA-seq', 'spRNA-seq'])
     
     if lib_type == 'snRNA-seq':
-        sample_name = st.sidebar.selectbox('Tissue', ['---Please choose---', 'heart stage seed (snRNA)', 'cotyledon stage seed (snRNA)'])
+        sample_name = st.sidebar.selectbox('Tissue', ['---Please choose---', 'globular stage seed (snRNA)','heart stage seed (snRNA)', 'cotyledon stage seed (snRNA)',
+                                                      'early maturation stage seed (snRNA)','hypocotyl (snRNA)','root (snRNA)','nodule (snRNA)'])
     elif lib_type == 'spRNA-seq':
-        sample_name = st.sidebar.selectbox('Tissue', ['---Please choose---', 'heart stage seed (spatial)', 'cotyledon stage seed (spatial)', 'early maturation stage seed (spatial)'])
+        sample_name = st.sidebar.selectbox('Tissue', ['---Please choose---', 'heart stage seed (spatial)', 'cotyledon stage seed (spatial)', 'early maturation stage seed (spatial)',
+                                                      'hypocotyl (spatial)','root (spatial)'])
     else:
         sample_name = None
     
