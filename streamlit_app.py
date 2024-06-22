@@ -96,7 +96,7 @@ def main():
     
     st.sidebar.header('Plot Configuration')
     st.sidebar.markdown('## Please select a dataset:')
-    lib_type = st.sidebar.selectbox('Library type', [ '---Please choose---','snRNA-seq', 'spRNA-seq'])
+    lib_type = st.sidebar.selectbox('Data', [ '---Please choose---','snRNA-seq', 'spRNA-seq'])
     
     if lib_type == 'snRNA-seq':
         sample_name = st.sidebar.selectbox('Tissue', ['---Please choose---', 'globular stage seed (snRNA)','heart stage seed (snRNA)', 'cotyledon stage seed (snRNA)',
@@ -125,7 +125,7 @@ def main():
     if sample_name and sample_name != '---Please choose---':
         st.sidebar.markdown('## Please select gene to plot:')
         # plot_type = st.sidebar.selectbox('Select plot type', ['UMAP', 'Spatial'])
-        plot_type = st.sidebar.radio('Select plot type', ['Violin','UMAP', 'Spatial'], horizontal=True)
+        plot_type = st.sidebar.radio('Select plot type', ['UMAP', 'Spatial','Violin'], horizontal=True)
         gene_name = st.sidebar.selectbox('Enter gene name for expression plot', ['', *gene_ids])
         
             
