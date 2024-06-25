@@ -81,12 +81,21 @@ def get_adata_sftp(file_name):
 
 def main():
     ## dic for matching input sample same and stored adata file name
-    sample_dic = {'heart stage seed (spatial)': 'gma_sp_HSA_fromSeurat.h5ad','cotyledon stage seed (spatial)':'gma_sp_CS2A_fromSeurat.h5ad', 
-                  'early maturation stage seed (spatial)':'gma_sp_ESA_fromSeurat.h5ad','hypocotyl (spatial)': 'gma_sp_HPA_fromSeurat.h5ad','root (spatial)': 'gma_sp_RTC_rep1_fromSeurat.h5ad',
+    sample_dic = {'heart stage seed (spatial)': 'sp_adt_HS_A_slim_062424.h5ad','cotyledon stage seed (spatial)':'sp_adt_CS_A_slim_062424.h5ad', 
+                  'early maturation stage seed (spatial)':'sp_adt_ES_A_slim_062424.h5ad','hypocotyl (spatial)': 'sp_adt_HP_A_slim_062424.h5ad','root (spatial)': 'sp_adt_RTB_rep1_slim_062424.h5ad',
                   
                   'globular stage seed (snRNA)': 'snrna_adt_GS_slim.h5ad','heart stage seed (snRNA)': 'snrna_adt_HS_slim.h5ad',
                   'cotyledon stage seed (snRNA)': 'snrna_adt_CS_slim.h5ad', 'early maturation stage seed (snRNA)': 'snrna_adt_ES_slim.h5ad',
-                  'hypocotyl (snRNA)':'snrna_adt_HP_slim.h5ad', 'root (snRNA)':'snrna_adt_RT_slim.h5ad', 'nodule (snRNA)':'snrna_adt_NOD_slim.h5ad'
+                  'hypocotyl (snRNA)':'snrna_adt_HP_slim.h5ad', 'root (snRNA)':'snrna_adt_RT_slim.h5ad', 'nodule (snRNA)':'snrna_adt_NOD_slim.h5ad',
+                  
+                  'globular stage seed (motif)': 'gma_GS_motif_deviation_imputed_slim.h5ad','heart stage seed (motif)': 'gma_HS_motif_deviation_imputed_slim.h5ad',
+                  'cotyledon stage seed (motif)': 'gma_CS_motif_deviation_imputed_slim.h5ad', 'early maturation stage seed (motif)': 'gma_ES_motif_deviation_imputed_slim.h5ad', 'middle maturation stage seed (motif)':'gma_MS_motif_deviation_imputed_slim.h5ad',
+                  'hypocotyl (motif)':'gma_HP_motif_deviation_imputed_slim.h5ad', 'root (motif)':'gma_RT_motif_deviation_imputed_slim.h5ad', 'nodule (motif)':'gma_NOD_motif_deviation_imputed_slim.h5ad',
+                  'leaf (motif)':'gma_LF_motif_deviation_imputed_slim.h5ad', 'pod (motif)':'gma_PD_motif_deviation_imputed_slim.h5ad',
+                  
+                  'globular stage seed (TF)': 'gma_GS_TF_expression_imputed_slim.h5ad','heart stage seed (TF)': 'gma_HS_TF_expression_imputed_slim.h5ad',
+                  'cotyledon stage seed (TF)': 'gma_CS_TF_expression_imputed_slim.h5ad', 'early maturation stage seed (TF)': 'gma_ES_TF_expression_imputed_slim.h5ad',
+                  'hypocotyl (TF)':'gma_HP_TF_expression_imputed_slim.h5ad', 'root (TF)':'gma_RT_TF_expression_imputed_slim.h5ad', 'nodule (snRNA)':'gma_NOD_TF_expression_imputed_slim.h5ad',
                   }
     
     ###############################################
@@ -96,7 +105,7 @@ def main():
     
     st.sidebar.header('Plot Configuration')
     st.sidebar.markdown('## Please select a dataset:')
-    lib_type = st.sidebar.selectbox('Data', [ '---Please choose---','snRNA-seq', 'spRNA-seq'])
+    lib_type = st.sidebar.selectbox('Data', [ '---Please choose---','snRNA-seq', 'spRNA-seq', 'scATAC-seq'])
     
     if lib_type == 'snRNA-seq':
         sample_name = st.sidebar.selectbox('Tissue', ['---Please choose---', 'globular stage seed (snRNA)','heart stage seed (snRNA)', 'cotyledon stage seed (snRNA)',
@@ -104,6 +113,15 @@ def main():
     elif lib_type == 'spRNA-seq':
         sample_name = st.sidebar.selectbox('Tissue', ['---Please choose---', 'heart stage seed (spatial)', 'cotyledon stage seed (spatial)', 'early maturation stage seed (spatial)',
                                                       'hypocotyl (spatial)','root (spatial)'])
+    elif lib_type == 'scATAC-seq':
+        data_type = st.sidebar.radio('Select data type', ['motif deviation', 'motif associated TF expression'], horizontal=True)
+        if data_type =='motif deviation':
+            sample_name = st.sidebar.selectbox('Tissue', ['---Please choose---', 'globular stage seed (motif)','heart stage seed (motif)', 'cotyledon stage seed (motif)',
+                                                        'early maturation stage seed (motif)','middle maturation stage seed (motif)','hypocotyl (motif)','root (motif)','nodule (motif)',
+                                                        'leaf (motif)', 'pod (motif)'])
+        elif data_type =='motif associated TF expression':
+            sample_name = st.sidebar.selectbox('Tissue', ['---Please choose---', 'globular stage seed (TF)','heart stage seed (TF)', 'cotyledon stage seed (TF)',
+                                                        'early maturation stage seed (TF)','hypocotyl (TF)','root (TF)','nodule (TF)'])
     else:
         sample_name = None
     
@@ -134,7 +152,7 @@ def main():
     ###############################################
     
     st.markdown('## Soybean Gene Visualization')
-    st.markdown('Welcome to the soybean multiomic single-cell database. Please select the dataset and genes from the sidebar to start. :balloon:')
+    st.markdown('Welcome to the soybean multiomic single-cell database. Please select the dataset and genes from the sidebar to start.')
     st.markdown('[A spatially resolved multiomic single-cell atlas of soybean development (paper link)](https://schmitzlab.uga.edu/), Zhang et al., 2024 BioRxiv')
     
     if sample_name and sample_name != '---Please choose---':
