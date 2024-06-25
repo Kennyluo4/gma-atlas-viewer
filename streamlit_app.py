@@ -166,7 +166,7 @@ def main():
         
         if plot_type == 'UMAP':
             st.subheader('UMAP Plot')
-            fig, axs = plt.subplots(1, len(variables_to_plot), figsize=(5 * len(variables_to_plot), 4))
+            fig, axs = plt.subplots(len(variables_to_plot), 1, figsize=(5, 5 * len(variables_to_plot)))
             if len(variables_to_plot) == 1:
                 axs = [axs]
             for ax, gene in zip(axs, variables_to_plot):
@@ -178,7 +178,7 @@ def main():
             if lib_type != 'spRNA-seq':
                 st.error(' :crying_cat_face: Spatial Map not available. \nSelected data is not spatial transcriptomics')
             else:
-                fig, axs = plt.subplots(1, len(variables_to_plot), figsize=(5 * len(variables_to_plot), 4))
+                fig, axs = plt.subplots(len(variables_to_plot), 1, figsize=(5, 5 * len(variables_to_plot)))
                 if len(variables_to_plot) == 1:
                     axs = [axs]
                 for ax, gene in zip(axs, variables_to_plot):
