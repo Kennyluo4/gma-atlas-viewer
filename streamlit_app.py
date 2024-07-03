@@ -153,7 +153,7 @@ def main():
     
     st.markdown('## Soybean Gene Visualization')
     st.markdown('Welcome to the soybean multiomic single-cell database. Please select the dataset and genes from the sidebar to start.')
-    st.markdown('[A spatially resolved multiomic single-cell atlas of soybean development (paper link)](https://schmitzlab.uga.edu/), Zhang et al., 2024 BioRxiv')
+    st.markdown('[A spatially resolved multiomic single-cell atlas of soybean development](https://doi.org/10.1101/2024.07.03.601616), Zhang et al., 2024 BioRxiv')
     
     if sample_name and sample_name != '---Please choose---':
         # st.write('Generating the', plot_type, 'plot for', sample_name,  lib_type)
