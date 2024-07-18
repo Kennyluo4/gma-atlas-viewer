@@ -95,7 +95,7 @@ def main():
                   
                   'globular stage seed (TF)': 'gma_GS_TF_expression_imputed_slim.h5ad','heart stage seed (TF)': 'gma_HS_TF_expression_imputed_slim.h5ad',
                   'cotyledon stage seed (TF)': 'gma_CS_TF_expression_imputed_slim.h5ad', 'early maturation stage seed (TF)': 'gma_ES_TF_expression_imputed_slim.h5ad',
-                  'hypocotyl (TF)':'gma_HP_TF_expression_imputed_slim.h5ad', 'root (TF)':'gma_RT_TF_expression_imputed_slim.h5ad', 'nodule (snRNA)':'gma_NOD_TF_expression_imputed_slim.h5ad',
+                  'hypocotyl (TF)':'gma_HP_TF_expression_imputed_slim.h5ad', 'root (TF)':'gma_RT_TF_expression_imputed_slim.h5ad', 'nodule (TF)':'gma_NOD_TF_expression_imputed_slim.h5ad',
                   }
     
     ###############################################
