@@ -39,45 +39,45 @@ def get_adata_aws(file_name):
     # Initialize S3 client
     s3 = boto3.client('s3', aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
 
-    bucket_name = 'soybeanatlas'
+    bucket_name = 'soybean-atlas'
     file_key = file_name
     local_file_name = file_name
     print(f'Reading file: {local_file_name}')
 
-    # Download file from S3
+    # Download file from Se`3
     s3.download_file(bucket_name, file_key, local_file_name)
 
     # Read the AnnData file using Scanpy
     adata = sc.read(local_file_name)
     return adata
 
-def get_adata_sftp(file_name):
-    '''read files stored on cluster'''
-    hostname = 'xfer.gacrc.uga.edu'
-    # st.secrets['xferhost']
-    port = 22
-    username = ''
-    # st.secrets['userid']
-    password = ''
-    # st.secrets['xferpass']
-    remote_path = '/' + file_name
-    with open(os.path.expanduser('~/.ssh/id_rsa'), 'r') as file:
-        key_content = file.read()
-    try:
-        private_key = paramiko.RSAKey.from_private_key(StringIO(key_content), password='')
+# def get_adata_sftp(file_name):
+#     '''read files stored on cluster'''
+#     hostname = 'xfer.gacrc.uga.edu'
+#     # st.secrets['xferhost']
+#     port = 22
+#     username = ''
+#     # st.secrets['userid']
+#     password = ''
+#     # st.secrets['xferpass']
+#     remote_path = '/' + file_name
+#     with open(os.path.expanduser('~/.ssh/id_rsa'), 'r') as file:
+#         key_content = file.read()
+#     try:
+#         private_key = paramiko.RSAKey.from_private_key(StringIO(key_content), password='')
 
-        transport = paramiko.Transport((hostname, port))
-        transport.connect(username=username, pkey=private_key)
+#         transport = paramiko.Transport((hostname, port))
+#         transport.connect(username=username, pkey=private_key)
 
-        sftp = paramiko.SFTPClient.from_transport(transport)
-        with sftp.file(remote_path, 'r') as remote_file:
-            file_content = remote_file.read()
-        sftp.close()
-        transport.close()
-        return file_content
-    except Exception as e:
-        st.error(f"An error occurred: {e}")
-        return None
+#         sftp = paramiko.SFTPClient.from_transport(transport)
+#         with sftp.file(remote_path, 'r') as remote_file:
+#             file_content = remote_file.read()
+#         sftp.close()
+#         transport.close()
+#         return file_content
+#     except Exception as e:
+#         st.error(f"An error occurred: {e}")
+#         return None
 
 def main():
     ## dic for matching input sample same and stored adata file name
