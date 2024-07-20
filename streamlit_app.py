@@ -128,7 +128,8 @@ def main():
     ## Retrive the adata after data type selection
     if sample_name!= None and sample_name!= '---Please choose---':
         filename = sample_dic[sample_name]
-        adata = get_adata_aws(filename)
+        adata = sc.read_h5ad(filename)
+        # adata = get_adata_aws(filename)
         # adata = get_adata_sftp(filename)
         # adata = sc.read_h5ad('/Users/ziliangluo/Library/CloudStorage/OneDrive-UniversityofGeorgia/PycharmProjects/SpatialSeq/saved_ad/Gm_atlas_Cotyledon_stage_seeds_ATAC_imputed2.h5ad')
         
@@ -140,6 +141,7 @@ def main():
 
     # gene_ids = ['test','ann1.Glyma.02G228100', 'ann1.Glyma.15G127900']
     
+    plot_type = None
     if sample_name and sample_name != '---Please choose---':
         st.sidebar.markdown('## Please select gene to plot:')
         # plot_type = st.sidebar.selectbox('Select plot type', ['UMAP', 'Spatial'])
@@ -151,9 +153,7 @@ def main():
     ##                Main page                 ###
     ###############################################
     
-    st.markdown('## Soybean Gene Visualization')
-    st.markdown('Welcome to the soybean multiomic single-cell database. Please select the dataset and genes from the sidebar to start.')
-    st.markdown('[A spatially resolved multiomic single-cell atlas of soybean development](https://doi.org/10.1101/2024.07.03.601616), Zhang et al., 2024 BioRxiv')
+    st.markdown('## Soybean Gene Viewer')
     
     if sample_name and sample_name != '---Please choose---':
         # st.write('Generating the', plot_type, 'plot for', sample_name,  lib_type)
@@ -192,6 +192,18 @@ def main():
                 fig, ax = plt.subplots(figsize=(12, 6))
                 sc.pl.violin(adata,gene_name, groupby='cell_types', rotation= 60, ax=ax)
                 st.pyplot(fig)
+                
+    if plot_type == None:
+        st.markdown('Welcome to the soybean multiomic single-cell database. Please select the dataset and genes from the sidebar to start.')
+        st.markdown('[A spatially resolved multiomic single-cell atlas of soybean development](https://doi.org/10.1101/2024.07.03.601616), Zhang et al., 2024 BioRxiv')
 
+    ## footnote
+    footnote = """
+                <hr>
+                <p style='font-size: small;'>For issues and questions, please contact 
+                <a href='mailto:Ziliang'>zl57208@uga.edu</a>.</p>
+                """
+    st.markdown(footnote, unsafe_allow_html=True)
+    
 if __name__ == '__main__':
     main()
