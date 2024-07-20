@@ -7,7 +7,7 @@ import boto3        # for s3 file transfer
 import os
 
 # Set the page config to wide mode
-st.set_page_config(layout="centered")
+st.set_page_config(layout="wide")
     
 # Inject custom CSS to set specific width or ratio
 st.markdown(
