@@ -201,7 +201,7 @@ def main():
     footnote = """
                 <hr>
                 <p style='font-size: small;'>For issues and questions, please contact 
-                <a href='mailto:Ziliang'>zl57208@uga.edu</a>.</p>
+                <a href='mailto:luoziliang@uga.edu'>Ziliang</a>.</p>
                 """
     st.markdown(footnote, unsafe_allow_html=True)
     
