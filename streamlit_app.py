@@ -196,7 +196,7 @@ def main():
     if plot_type == None:
         st.markdown('Welcome to the soybean multiomic single-cell database. Please select the dataset and genes from the sidebar to start.')
         st.markdown('[A spatially resolved multiomic single-cell atlas of soybean development](https://doi.org/10.1101/2024.07.03.601616), Zhang et al., 2024 BioRxiv')
-
+        st.image('./images/overview.png')
     ## footnote
     footnote = """
                 <hr>
@@ -205,5 +205,12 @@ def main():
                 """
     st.markdown(footnote, unsafe_allow_html=True)
     
+    if sample_name == None:
+        sentiment_mapping = ["one", "two", "three", "four", "five"]
+        st.markdown('Rate our website')
+        selected = st.feedback('stars')
+        if selected is not None:
+            st.markdown(f'You selected {sentiment_mapping[selected]} star(s).')
+        
 if __name__ == '__main__':
     main()
