@@ -191,6 +191,8 @@ def main():
             if gene_name != '':
                 fig, ax = plt.subplots(figsize=(12, 6))
                 sc.pl.violin(adata,gene_name, groupby='cell_types', rotation= 60, ax=ax)
+                # Add custom y-axis label
+                ax.set_ylabel(f'{gene_name} (normalized gene expression)')  
                 st.pyplot(fig)
                 
     if plot_type == None:
