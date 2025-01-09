@@ -196,8 +196,8 @@ def main():
                 st.pyplot(fig)
                 
     if plot_type == None:
-        st.markdown('Welcome to the soybean multiomic single-cell database. Please select the dataset and genes from the sidebar to start.')
-        st.markdown('[A spatially resolved multiomic single-cell atlas of soybean development](https://doi.org/10.1101/2024.07.03.601616), Zhang et al., 2024 BioRxiv')
+        st.markdown('Welcome to the soybean multi-omic single-cell database. Please select the dataset and genes from the sidebar to start.')
+        st.markdown('[A spatially resolved multi-omic single-cell atlas of soybean development](10.1016/j.cell.2024.10.050), Zhang et al., 2024 Cell')
         st.image('./images/overview.png')
     ## footnote
     footnote = """
