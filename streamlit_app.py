@@ -131,7 +131,7 @@ def main():
         sample_name = None
     
     ## Retrive the adata after data type selection
-    if sample_name!= None and sample_name!= '---Please choose---':
+    if sample_name!= None and '---Please choose---' not in sample_name:
         filename = sample_dic[sample_name]
         adata = sc.read_h5ad(filename)
         # adata = get_adata_aws(filename)
