@@ -204,6 +204,7 @@ def main():
         st.markdown('Welcome to the soybean multi-omic single-cell database. Please select the dataset and genes from the sidebar to start.')
         st.markdown('[A spatially resolved multi-omic single-cell atlas of soybean development](https://doi.org/10.1016/j.cell.2024.10.050), Zhang et al., 2024 Cell')
         st.image('./images/overview.png')
+        st.image('./images/nematode.png')
     ## footnote
     footnote = """
                 <hr>
