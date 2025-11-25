@@ -87,8 +87,9 @@ def main():
                   'globular stage seed (snRNA)': 'snrna_adt_GS_slim.h5ad','heart stage seed (snRNA)': 'snrna_adt_HS_slim.h5ad',
                   'cotyledon stage seed (snRNA)': 'snrna_adt_CS_slim.h5ad', 'early maturation stage seed (snRNA)': 'snrna_adt_ES_slim.h5ad',
                   'hypocotyl (snRNA)':'snrna_adt_HP_slim.h5ad', 'root (snRNA)':'snrna_adt_RT_slim.h5ad', 'nodule (snRNA)':'snrna_adt_NOD_slim.h5ad',
+                  'root with nematode infection (snRNA)':'Gm_All_root_integrated-infected_RNA_RNA_imputed.h5ad','root with mock infection (snRNA)':'Gm_All_root_integrated-mock_RNA_RNA_imputed.h5ad','All roots nematode infected and mock (snRNA)':'Gm_All_root_integrated_RNA_RNA_imputed.h5ad',
                   
-                  'globular stage seed (motif)': 'gma_GS_motif_deviation_imputed_slim.h5ad','heart stage seed (motif)': 'gma_HS_motif_deviation_imputed_slim.h5ad',
+                  'globular stage seed (motif)' : 'gma_GS_motif_deviation_imputed_slim.h5ad','heart stage seed (motif)': 'gma_HS_motif_deviation_imputed_slim.h5ad',
                   'cotyledon stage seed (motif)': 'gma_CS_motif_deviation_imputed_slim.h5ad', 'early maturation stage seed (motif)': 'gma_ES_motif_deviation_imputed_slim.h5ad', 'middle maturation stage seed (motif)':'gma_MS_motif_deviation_imputed_slim.h5ad',
                   'hypocotyl (motif)':'gma_HP_motif_deviation_imputed_slim.h5ad', 'root (motif)':'gma_RT_motif_deviation_imputed_slim.h5ad', 'nodule (motif)':'gma_NOD_motif_deviation_imputed_slim.h5ad',
                   'leaf (motif)':'gma_LF_motif_deviation_imputed_slim.h5ad', 'pod (motif)':'gma_PD_motif_deviation_imputed_slim.h5ad',
@@ -108,20 +109,24 @@ def main():
     lib_type = st.sidebar.selectbox('Data', [ '---Please choose---','snRNA-seq', 'spRNA-seq', 'scATAC-seq'])
     
     if lib_type == 'snRNA-seq':
-        sample_name = st.sidebar.selectbox('Tissue', ['---Please choose---', 'globular stage seed (snRNA)','heart stage seed (snRNA)', 'cotyledon stage seed (snRNA)',
-                                                      'early maturation stage seed (snRNA)','hypocotyl (snRNA)','root (snRNA)','nodule (snRNA)'])
+        sample_name = st.sidebar.selectbox('Tissue', ['---Please choose---', 'globular stage seed','heart stage seed', 'cotyledon stage seed',
+                                                      'early maturation stage seed','hypocotyl','root','nodule', 'root with nematode infection','root with mock infection','All roots nematode infected and mock'])
+        sample_name = sample_name + ' (snRNA)'
     elif lib_type == 'spRNA-seq':
-        sample_name = st.sidebar.selectbox('Tissue', ['---Please choose---', 'heart stage seed (spatial)', 'cotyledon stage seed (spatial)', 'early maturation stage seed (spatial)',
-                                                      'hypocotyl (spatial)','root (spatial)'])
+        sample_name = st.sidebar.selectbox('Tissue', ['---Please choose---', 'heart stage seed', 'cotyledon stage seed', 'early maturation stage seed',
+                                                      'hypocotyl','root'])
+        sample_name = sample_name + ' (spatial)'
     elif lib_type == 'scATAC-seq':
         data_type = st.sidebar.radio('Select data type', ['motif deviation', 'motif associated TF expression'], horizontal=True)
         if data_type =='motif deviation':
-            sample_name = st.sidebar.selectbox('Tissue', ['---Please choose---', 'globular stage seed (motif)','heart stage seed (motif)', 'cotyledon stage seed (motif)',
-                                                        'early maturation stage seed (motif)','middle maturation stage seed (motif)','hypocotyl (motif)','root (motif)','nodule (motif)',
-                                                        'leaf (motif)', 'pod (motif)'])
+            sample_name = st.sidebar.selectbox('Tissue', ['---Please choose---', 'globular stage seed','heart stage seed', 'cotyledon stage seed',
+                                                        'early maturation stage seed','middle maturation stage seed','hypocotyl','root','nodule',
+                                                        'leaf', 'pod'])
+            sample_name = sample_name + ' (motif)'
         elif data_type =='motif associated TF expression':
-            sample_name = st.sidebar.selectbox('Tissue', ['---Please choose---', 'globular stage seed (TF)','heart stage seed (TF)', 'cotyledon stage seed (TF)',
-                                                        'early maturation stage seed (TF)','hypocotyl (TF)','root (TF)','nodule (TF)'])
+            sample_name = st.sidebar.selectbox('Tissue', ['---Please choose---', 'globular stage seed (TF)','heart stage seed', 'cotyledon stage seed',
+                                                        'early maturation stage seed','hypocotyl','root','nodule'])
+            sample_name = sample_name + ' (TF)'
     else:
         sample_name = None
     
