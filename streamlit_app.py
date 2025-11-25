@@ -147,7 +147,7 @@ def main():
     # gene_ids = ['test','ann1.Glyma.02G228100', 'ann1.Glyma.15G127900']
     
     plot_type = None
-    if sample_name and sample_name != '---Please choose---':
+    if sample_name and '---Please choose---' not in sample_name:
         st.sidebar.markdown('## Please select gene to plot:')
         # plot_type = st.sidebar.selectbox('Select plot type', ['UMAP', 'Spatial'])
         plot_type = st.sidebar.radio('Select plot type', ['UMAP', 'Spatial','Violin'], horizontal=True)
@@ -160,7 +160,7 @@ def main():
     
     st.markdown('## Soybean Gene Viewer')
     
-    if sample_name and sample_name != '---Please choose---':
+    if sample_name and '---Please choose---' not in sample_name:
         # st.write('Generating the', plot_type, 'plot for', sample_name,  lib_type)
         
         # selected gene for plot
@@ -199,11 +199,13 @@ def main():
                 # Add custom y-axis label
                 ax.set_ylabel(f'{gene_name} (normalized expression)')  
                 st.pyplot(fig)
-                
+    
+    #### Main page figures when no plot type selected
     if plot_type == None:
         st.markdown('Welcome to the soybean multi-omic single-cell database. Please select the dataset and genes from the sidebar to start.')
         st.markdown('[A spatially resolved multi-omic single-cell atlas of soybean development](https://doi.org/10.1016/j.cell.2024.10.050), Zhang et al., 2024 Cell')
         st.image('./images/overview.png')
+        st.markdown('Update 2025-11: added nematode infection scRNA-seq data')
         st.image('./images/nematode.png')
     ## footnote
     footnote = """
