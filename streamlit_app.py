@@ -87,7 +87,7 @@ def main():
                   'globular stage seed (snRNA)': 'snrna_adt_GS_slim.h5ad','heart stage seed (snRNA)': 'snrna_adt_HS_slim.h5ad',
                   'cotyledon stage seed (snRNA)': 'snrna_adt_CS_slim.h5ad', 'early maturation stage seed (snRNA)': 'snrna_adt_ES_slim.h5ad',
                   'hypocotyl (snRNA)':'snrna_adt_HP_slim.h5ad', 'root (snRNA)':'snrna_adt_RT_slim.h5ad', 'nodule (snRNA)':'snrna_adt_NOD_slim.h5ad',
-                  'root with nematode infection (snRNA)':'Gm_All_root_integrated-infected_RNA_RNA_imputed.h5ad','root with mock infection (snRNA)':'Gm_All_root_integrated-mock_RNA_RNA_imputed.h5ad','All roots nematode infected and mock (snRNA)':'Gm_All_root_integrated_RNA_RNA_imputed.h5ad',
+                  'root with nematode infection (snRNA)':'Gm_All_root_integrated-infected_RNA_RNA_imputed_slim.h5ad','root with mock infection (snRNA)':'Gm_All_root_integrated-infected_RNA_RNA_imputed_slim.h5ad',
                   
                   'globular stage seed (motif)' : 'gma_GS_motif_deviation_imputed_slim.h5ad','heart stage seed (motif)': 'gma_HS_motif_deviation_imputed_slim.h5ad',
                   'cotyledon stage seed (motif)': 'gma_CS_motif_deviation_imputed_slim.h5ad', 'early maturation stage seed (motif)': 'gma_ES_motif_deviation_imputed_slim.h5ad', 'middle maturation stage seed (motif)':'gma_MS_motif_deviation_imputed_slim.h5ad',
